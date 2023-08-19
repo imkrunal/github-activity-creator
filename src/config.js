@@ -1,9 +1,12 @@
 const config = {
-  repo: 'activity-displayer',
+  repo: process.env.GITHUB_REPO,
+  authToken: process.env.GITHUB_ACCESS_TOKEN,
   file: 'README.md',
   baseBranch: 'main',
   baseBranchRef: 'heads/main',
-  authToken: process.env.GITHUB_ACCESS_TOKEN,
+  maxCommits: 10,
+  maxIssues: 2,
+  maxPullRequests: 5,
 }
 
 module.exports = { config }

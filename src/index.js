@@ -3,6 +3,7 @@ const cron = require('node-cron')
 const { getRandomDateTime, cronLog } = require('./utils')
 const { createCommit, createIssue, createPullRequest } = require('./actions')
 const { db } = require('./db')
+const { config } = require('./config')
 require('dotenv').config()
 
 /*
@@ -12,14 +13,10 @@ require('dotenv').config()
  * Cron Expression: 0 0 * * *
  */
 
-const MAX_NO_OF_COMMITS = 10
-const MAX_NO_OF_ISSUES = 2
-const MAX_NO_OF_PULL_REQUESTS = 3
-
 const generateJobs = async () => {
   try {
     // Create job for commits
-    const noOfCommits = random(1, MAX_NO_OF_COMMITS)
+    const noOfCommits = random(1, config.maxCommits)
     cronLog(`Total commits to create: ${noOfCommits}`)
 
     const commitTimings = times(noOfCommits, getRandomDateTime)
@@ -37,7 +34,7 @@ const generateJobs = async () => {
     }
 
     // Create job for issues
-    const noOfIssues = random(1, MAX_NO_OF_ISSUES)
+    const noOfIssues = random(1, config.maxIssues)
     cronLog(`Total issues to create: ${noOfIssues}`)
 
     const issuesTimings = times(noOfIssues, getRandomDateTime)
@@ -55,7 +52,7 @@ const generateJobs = async () => {
     }
 
     // Create job for pull requests
-    const noOfPullRequests = random(1, MAX_NO_OF_PULL_REQUESTS)
+    const noOfPullRequests = random(1, config.maxPullRequests)
     cronLog(`Total pull requests to create: ${noOfPullRequests}`)
 
     const pullRequestsTimings = times(noOfPullRequests, getRandomDateTime)
